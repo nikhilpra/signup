@@ -1,7 +1,9 @@
+require('dotenv').config()
 const express= require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const https = require("https");
+
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
@@ -32,11 +34,12 @@ app.post("/",function(req,res){
     };
     const jsonData = JSON.stringify(data);
 
-    const url="https://us2.api.mailchimp.com/3.0/lists/fc1466e8af"
-
+    const url=process.env.URL
+  
     const options = {
         method: "POST",
-        auth: "nikhil:b3664926ff327bf50cb7b8178c50da9c-us2"
+        auth: process.env.AUTH
+        
 
     }
 
@@ -49,7 +52,7 @@ app.post("/",function(req,res){
         }
 
         response.on("data",function(data){
-            console.log(JSON.parse(data));
+            /* console.log(JSON.parse(data)); */
         })
 
     })
@@ -66,6 +69,8 @@ app.post("/failure",function(req,res){
 app.listen(process.env.PORT || 3000,function(){
     console.log("Server running at 3000");
 })
+
+
 /* api key */
 /* b3664926ff327bf50cb7b8178c50da9c-us2 */
 /* list id */
